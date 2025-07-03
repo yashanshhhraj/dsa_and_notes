@@ -1,0 +1,1 @@
+min(leftMax_arr[i], rightMax_arr[i])
