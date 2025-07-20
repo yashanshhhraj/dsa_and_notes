@@ -63,14 +63,22 @@ class Teacher : public Human {
 };
 
 /*
-----------------------------------------------
-Accessibility | External | Within | Derived  |
-              |   Code   | Class  |  Class   |
-----------------------------------------------
-   public     |    Y     |   Y    |   Y      |
-   protected  |    N     |   Y    |   Y      |
-   private    |    N     |   N    |   N      |
-----------------------------------------------
+-------------------------------------------------
+|  Accessibility | External | Within | Derived  |
+|                |   Code   | Class  |  Class   |
+|------------------------------------------------
+|   public       |    Y     |   Y    |   Y      |
+|   protected    |    N     |   Y    |   Y      |
+|   private      |    N     |   N    |   N      |
+-------------------------------------------------
+
+------------------------------------------------------------------------------------------------
+| Base Class Member |  public inheritance    |   protected inheritance  | private inheritance  |
+|----------------------------------------------------------------------------------------------|
+|   public	        |  public in derived	 |  protected in derived	|  private in derived  |
+|   protected	    |  protected in derived  |  protected in derived	|  private in derived  |
+|   private	        |  Not inherited  	     |  Not inherited	        |  Not inherited       |
+|-----------------------------------------------------------------------------------------------
 */
 
 int main() {
