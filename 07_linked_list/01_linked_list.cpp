@@ -19,6 +19,8 @@ void printList(int arr[], Node * head) {
         cout << temp -> data << " ";
         temp = temp->next;
     }
+
+    cout << endl;
 }
 
 // Creating linked list with recursion appending node at end
@@ -39,6 +41,23 @@ Node * createLinkedListFromStart(int arr[], int index, int n, Node * prev) {
     temp -> next = prev;
 
     return createLinkedListFromStart(arr, index + 1, n, temp);
+}
+
+// Appending at mid of a linked list
+void listAddMid(Node * temp, int pos, int val, int index) {
+    if(temp -> next == NULL) return;
+
+    if(index == pos - 1) {
+        Node * tempNode = new Node(val);
+
+        tempNode -> next = temp -> next;
+        temp -> next = tempNode;
+
+        return;
+    }
+
+    temp = temp -> next;
+    listAddMid(temp, pos, val, index + 1);
 }
 
 int main() {
@@ -114,19 +133,26 @@ int main() {
     printList(arr, head);
     
     // ? Insert Node at particular position
-    int x = 3; // <-- Insertion Position
-    int value = 30;
+    // int x = 3; // <-- Insertion Position
+    // int value = 30;
     
-    Node * temp = head;
-    x--;
+    // Node * temp = head;
+    // x--;
     
-    while(x--) temp = temp -> next;
+    // while(x--) temp = temp -> next;
 
-    Node * temp2 = new Node(value);
-    temp2->next = temp->next;
-    temp -> next = temp2;
+    // Node * temp2 = new Node(value);
+    // temp2->next = temp->next;
+    // temp -> next = temp2;
+    
+    // printList(arr, head);
+    
+    // ? Insert Node at particular position with recursion
+    int pos = 4; // <-- Value should be 1 <= pos <= Number of Nodes in Linked List - 1
+    int val = 7;
 
-    cout << endl;
+    listAddMid(head, pos, val, 0);
+
     printList(arr, head);
 
     // ? Creating a node at start with recursion
