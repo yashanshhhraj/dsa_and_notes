@@ -12,6 +12,35 @@ class Node {
     }
 };
 
+// Traversing a linked list
+void printList(int arr[], Node * head) {
+    Node *temp = head;
+    while(temp) {
+        cout << temp -> data << " ";
+        temp = temp->next;
+    }
+}
+
+// Creating linked list with recursion appending node at end
+Node * createLinkedListFromEnd(int arr[], int index, int n) {
+    // Base Case
+    if(index == n) return NULL;
+    
+    Node * temp = new Node(arr[index]);
+    temp->next = createLinkedListFromEnd(arr, index + 1, n);
+    return temp;
+}
+
+// Creating linked list with recursion appending node at start
+Node * createLinkedListFromStart(int arr[], int index, int n, Node * prev) {
+    if(index == n) return prev;
+
+    Node * temp = new Node(arr[index]);
+    temp -> next = prev;
+
+    return createLinkedListFromStart(arr, index + 1, n, temp);
+}
+
 int main() {
     // Node A1(4);
     // cout << A1.data << " " << A1.next << endl;
@@ -40,50 +69,68 @@ int main() {
     // }
 
     // // Traversing a linked list
-    // Node *temp = head;
-    // while(temp) {
-    //     cout << temp -> data << " ";
-    //     temp = temp->next;
-    // }
+    // printList(arr, head);
 
     // ? Insert the node at the end
+    // int arr[5] = {2, 4, 3, 5, 6};
+    
+    // // For O(n^2)
+    // // Node * head = NULL;
+    
+    // // For O(n^2)
+    // Node * head = NULL, * tail = NULL;
+    
+    // for(int i = 0; i < 5; i++) {
+    //     // If linked list does not exist till now
+    //     if(head == NULL) {
+        //         head = new Node(arr[i]);
+
+    //         // For O(n)
+    //         tail = head;
+    //     }
+
+    //     // If linked list exists(O(n^2))
+    //     // else {
+        //     //     Node * tail = head;
+    //     //     while(tail -> next != NULL) {
+    //     //         tail = tail -> next;
+    //     //     }
+
+    //     //     tail -> next = new Node(arr[i]);
+    //     // }
+    //     // If linked list exists(O(n))
+    //     else {
+    //         tail -> next = new Node(arr[i]);
+    //         tail = tail -> next;
+    //     }
+    // }
+    
+    // // Traversing a linked list
+    // printList(arr, head);
+    
+    // ? Creating a node at end with recursion
     int arr[5] = {2, 4, 3, 5, 6};
+    Node * head = createLinkedListFromEnd(arr, 0, 5);
+    printList(arr, head);
+    
+    // ? Insert Node at particular position
+    int x = 3; // <-- Insertion Position
+    int value = 30;
+    
+    Node * temp = head;
+    x--;
+    
+    while(x--) temp = temp -> next;
 
-    // For O(n^2)
-    // Node * head = NULL;
+    Node * temp2 = new Node(value);
+    temp2->next = temp->next;
+    temp -> next = temp2;
 
-    // For O(n^2)
-    Node * head = NULL, * tail = NULL;
+    cout << endl;
+    printList(arr, head);
 
-    for(int i = 0; i < 5; i++) {
-        // If linked list does not exist till now
-        if(head == NULL) {
-            head = new Node(arr[i]);
-
-            // For O(n)
-            tail = head;
-        }
-
-        // If linked list exists(O(n^2))
-        // else {
-        //     Node * tail = head;
-        //     while(tail -> next != NULL) {
-        //         tail = tail -> next;
-        //     }
-
-        //     tail -> next = new Node(arr[i]);
-        // }
-        // If linked list exists(O(n))
-        else {
-            tail -> next = new Node(arr[i]);
-            tail = tail -> next;
-        }
-    }
-
-    // Traversing a linked list
-    Node *temp = head;
-    while(temp) {
-        cout << temp -> data << " ";
-        temp = temp->next;
-    }
+    // ? Creating a node at start with recursion
+    // int arr[5] = {2, 4, 3, 5, 6};
+    // Node * head = createLinkedListFromStart(arr, 0, 5, NULL);
+    // printList(arr, head);
 }
