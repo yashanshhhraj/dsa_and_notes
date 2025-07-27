@@ -14,6 +14,10 @@ class Node {
 
 // Traversing a linked list
 void printList(int arr[], Node * head) {
+    if(head == NULL) {
+        cout << "Got 'NULL' head pointer, empty Linked List";
+        return;
+    }
     Node *temp = head;
     while(temp) {
         cout << temp -> data << " ";
@@ -58,6 +62,21 @@ void listAddMid(Node * temp, int pos, int val, int index) {
 
     temp = temp -> next;
     listAddMid(temp, pos, val, index + 1);
+}
+
+// Deleting a node at a particular position with recursion
+void deleteNode(Node * &head, Node * curr, int pos, int i, Node * prev) {
+    if(curr == NULL) return;
+
+    if(i == pos - 1) {
+        if(prev == nullptr) head = head->next;
+        else prev->next = curr->next;
+
+        delete curr;
+        return;
+    }
+
+    deleteNode(head, curr->next, pos, i + 1, curr);
 }
 
 int main() {
@@ -148,15 +167,79 @@ int main() {
     // printList(arr, head);
     
     // ? Insert Node at particular position with recursion
-    int pos = 4; // <-- Value should be 1 <= pos <= Number of Nodes in Linked List - 1
-    int val = 7;
+    // int pos = 4; // <-- Value should be 1 <= pos <= Number of Nodes in Linked List - 1
+    // int val = 7;
 
-    listAddMid(head, pos, val, 0);
+    // listAddMid(head, pos, val, 0);
 
-    printList(arr, head);
+    // printList(arr, head);
 
     // ? Creating a node at start with recursion
     // int arr[5] = {2, 4, 3, 5, 6};
     // Node * head = createLinkedListFromStart(arr, 0, 5, NULL);
     // printList(arr, head);
+
+    // ? Deleting first node of linked list
+    // head = NULL; // <-- Testing
+    // if(head != NULL) {
+    //     Node * temp = head;
+    //     head = head -> next;
+
+    //     delete temp;
+    // }
+
+    // ? Delete a node at end
+    // Linked List Does Not Exists
+    // if(head != NULL) {
+    //     // Linked List with a single node
+    //     if(head ->next == NULL) {
+    //         // Node * temp = head;
+    //         delete head;
+    //         head = NULL;
+    //     }
+
+    //     // Linked List with node greater than 1
+    //     else {
+    //         Node * curr = head, * prev = NULL;
+
+    //         while(curr->next != NULL) {
+    //             prev = curr;
+    //             curr = curr->next;
+    //         }
+
+    //         delete curr;
+    //         prev->next = NULL;
+    //     }
+    // }
+
+    // ? Delete a node at particular position
+    // // Linked List Does Not Exists
+    int x = 1; // <-- Position to be deleted
+    // if(head != NULL) {
+    //     Node * curr = head, * prev = NULL;
+        
+
+    //     // If the first node to be deleted
+    //     if(x == 1) {
+    //         head = head -> next;
+    //         delete curr;
+    //     }
+
+    //     else {
+    //         x--;
+
+    //         while(x--) {
+    //             prev = curr;
+    //             curr = curr->next;
+    //         }
+
+    //         prev->next = curr->next;
+    //         delete curr;
+    //     }
+    // }
+
+    // ? Delete a node at particular position
+    deleteNode(head, head, x, 0, NULL);
+
+    printList(arr, head);
 }
