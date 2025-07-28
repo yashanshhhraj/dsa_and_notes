@@ -13,7 +13,7 @@ class Node {
 };
 
 // Traversing a linked list
-void printList(int arr[], Node * head) {
+void printList(Node * head) {
     if(head == NULL) {
         cout << "Got 'NULL' head pointer, empty Linked List";
         return;
@@ -79,6 +79,14 @@ void deleteNode(Node * &head, Node * curr, int pos, int i, Node * prev) {
     deleteNode(head, curr->next, pos, i + 1, curr);
 }
 
+// Reversing a linked list
+Node * revLinkedList(Node * prev, Node * curr, Node * fut) {
+    if (curr == nullptr) return prev;
+
+    curr->next = prev;
+    return revLinkedList(curr, fut, fut ? fut->next : nullptr);
+}
+
 int main() {
     // Node A1(4);
     // cout << A1.data << " " << A1.next << endl;
@@ -107,7 +115,7 @@ int main() {
     // }
 
     // // Traversing a linked list
-    // printList(arr, head);
+    // printList(head);
 
     // ? Insert the node at the end
     // int arr[5] = {2, 4, 3, 5, 6};
@@ -144,12 +152,12 @@ int main() {
     // }
     
     // // Traversing a linked list
-    // printList(arr, head);
+    // printList(head);
     
     // ? Creating a node at end with recursion
     int arr[5] = {2, 4, 3, 5, 6};
     Node * head = createLinkedListFromEnd(arr, 0, 5);
-    printList(arr, head);
+    printList(head);
     
     // ? Insert Node at particular position
     // int x = 3; // <-- Insertion Position
@@ -164,7 +172,7 @@ int main() {
     // temp2->next = temp->next;
     // temp -> next = temp2;
     
-    // printList(arr, head);
+    // printList(head);
     
     // ? Insert Node at particular position with recursion
     // int pos = 4; // <-- Value should be 1 <= pos <= Number of Nodes in Linked List - 1
@@ -172,12 +180,12 @@ int main() {
 
     // listAddMid(head, pos, val, 0);
 
-    // printList(arr, head);
+    // printList(head);
 
     // ? Creating a node at start with recursion
     // int arr[5] = {2, 4, 3, 5, 6};
     // Node * head = createLinkedListFromStart(arr, 0, 5, NULL);
-    // printList(arr, head);
+    // printList(head);
 
     // ? Deleting first node of linked list
     // head = NULL; // <-- Testing
@@ -239,7 +247,49 @@ int main() {
     // }
 
     // ? Delete a node at particular position
-    deleteNode(head, head, x, 0, NULL);
+    // deleteNode(head, head, x, 0, NULL);
 
-    printList(arr, head);
+    // printList(head);
+
+    // ? Reversing a linked list --> Iterative Approach
+    // Node * prev = nullptr, * curr = head, * next;
+
+    // while(curr) {
+    //     next = curr->next;
+    //     curr->next = prev;
+    //     prev = curr;
+    //     curr = next;
+    // }
+    // head = prev;
+
+    // printList(head);
+
+    // ? Reversing a linked list --> Recursive Approach
+    // head = revLinkedList(nullptr, head, head->next);
+
+    // printList(head);
+
+    // ! Slow and Fast Pointer Approach : -
+    /*
+    ? Used for following purposes
+    1. Detecting Cycle in a Linked List
+    2. Find the middle of a linked list
+    3. Detect Cycle Starting Point
+    4. Remove the nth node from end
+
+    ? Concept
+    --> Slow pointer moves one step at a time
+    --> Fast Pointer moves two step at a time
+    */
+
+    // ? Finding middle of a linked list (Rest applications discussed later)
+    Node * slow = head, * fast = head;
+
+    while(fast && fast -> next) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+
+    cout << slow->data << endl; // <-- Middle Node
+    // For the Linked List with even number of Elements, the middle element will be the 'next element' of 'size of linked list / 2'th position.
 }
