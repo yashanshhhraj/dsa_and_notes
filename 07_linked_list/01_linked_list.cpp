@@ -87,6 +87,40 @@ Node * revLinkedList(Node * prev, Node * curr, Node * fut) {
     return revLinkedList(curr, fut, fut ? fut->next : nullptr);
 }
 
+// Checking if the linked list is palindrome
+bool palindromeLinkedList(Node * head) {
+    // Single element is always palindrome
+    if(head -> next == nullptr) return true;
+
+    Node * temp = head;
+    int count = 0;
+
+    // Counting total nodes
+    while(temp) {
+        count++;
+        temp = temp->next;
+    }
+
+    count /= 2;
+    temp = head;
+
+    while(--count) temp = temp->next;
+    Node * parted = temp -> next;
+    temp -> next = nullptr;
+
+    // Reversing the second part of the linked list
+    Node * first = head, * sec = revLinkedList(nullptr, parted, parted -> next);
+
+    // Checking if it is palindrome
+    while(first) {
+        if(first -> data != sec -> data) return false;
+
+        first = first->next, sec = sec->next;
+    }
+
+    return true;
+}
+
 int main() {
     // Node A1(4);
     // cout << A1.data << " " << A1.next << endl;
@@ -155,7 +189,8 @@ int main() {
     // printList(head);
     
     // ? Creating a node at end with recursion
-    int arr[5] = {2, 4, 3, 5, 6};
+    // int arr[5] = {2, 4, 3, 5, 6};
+    int arr[5] = {2, 3, 4, 3, 2}; // <-- for palindrome check
     Node * head = createLinkedListFromEnd(arr, 0, 5);
     printList(head);
     
@@ -222,7 +257,7 @@ int main() {
 
     // ? Delete a node at particular position
     // // Linked List Does Not Exists
-    int x = 1; // <-- Position to be deleted
+    // int x = 1; // <-- Position to be deleted
     // if(head != NULL) {
     //     Node * curr = head, * prev = NULL;
         
@@ -283,13 +318,17 @@ int main() {
     */
 
     // ? Finding middle of a linked list (Rest applications discussed later)
-    Node * slow = head, * fast = head;
+    // Node * slow = head, * fast = head;
 
-    while(fast && fast -> next) {
-        slow = slow->next;
-        fast = fast->next->next;
-    }
+    // while(fast && fast -> next) {
+    //     slow = slow->next;
+    //     fast = fast->next->next;
+    // }
 
-    cout << slow->data << endl; // <-- Middle Node
-    // For the Linked List with even number of Elements, the middle element will be the 'next element' of 'size of linked list / 2'th position.
+    // cout << slow->data << endl; // <-- Middle Node
+    // // For the Linked List with even number of Elements, the middle element will be the 'next element' of 'size of linked list / 2'th position.
+
+    // ? Checking if the linked list is palindrome
+    if(palindromeLinkedList(head)) cout << "Linked List is palindrome"<< endl;
+    else cout << "Linked List is not palindrome"<< endl;
 }
