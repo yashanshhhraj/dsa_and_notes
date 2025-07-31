@@ -74,6 +74,52 @@ Node * createRecLinkedList(const int arr[], const int n, int i, Node * prev) {
     return temp;
 }
 
+// Insertion at a particular position
+Node * insertAtPos(Node * head, int pos, const int x) {
+    // If node to be added at 'pos = 0' or starting of linked list
+    if(pos == 0) {
+        Node * temp = new Node(x);
+
+        // If linked list nodes not exists
+        if(head == nullptr) return temp;
+
+        // If linked list exists, add before head;
+        temp -> next = head;
+        head -> prev = temp;
+        return temp;
+    }
+
+    // Navigating to node next to which new node to be added 
+    Node * curr = head;
+    while(--pos && curr != nullptr) curr = curr -> next;
+    
+    // If curr is nullptr, position is out of bounds, do nothing
+    if (curr == nullptr) {
+        cout << "Position should be within '0 <= pos <= size of linked list" << endl;
+        return head;
+    }
+
+    // If node to be added at end
+    if(curr -> next == nullptr) {
+        Node * temp = new Node(x);
+
+        temp -> prev = curr;
+        curr -> next = temp;
+
+        return head;
+    }
+
+    // If the node to be added at middle
+    Node * temp = new Node(x);
+
+    temp -> next = curr -> next;
+    curr -> next -> prev = temp;
+    curr -> next = temp;
+    temp -> prev = curr;
+
+    return head;
+}
+
 int main() {
     Node * head = nullptr;
 
@@ -108,7 +154,7 @@ int main() {
     // printList(head);
 
     // Linked List from array
-    int arr[] = {2, 3, 4, 6, 1, 6, 8, 5, 7, 8};
+    int arr[] = {2, 4, 5, 6, 7, 8, 9, 3};
     int n = sizeof(arr) / sizeof(arr[0]); // <-- Size of array
 
     // Creating Linked List Iteratively
@@ -116,5 +162,12 @@ int main() {
 
     // Creating Linked List Recursively
     head = createRecLinkedList(arr, n, 0, nullptr);
+    // printList(head);
+
+    // ? Insertion at a particular position in Doubly Linked List
+    // Position should be '0 <= pos <= Length of Linked List'
+    int pos = 8;
+    int val = 4;
+    head = insertAtPos(head, pos, val);
     printList(head);
 }
