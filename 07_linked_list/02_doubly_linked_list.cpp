@@ -154,7 +154,7 @@ int main() {
     // printList(head);
 
     // Linked List from array
-    int arr[] = {2, 4, 5, 6, 7, 8, 9, 3};
+    int arr[] = {2, 3, 6, 8, 3, 5, 6};
     int n = sizeof(arr) / sizeof(arr[0]); // <-- Size of array
 
     // Creating Linked List Iteratively
@@ -162,12 +162,91 @@ int main() {
 
     // Creating Linked List Recursively
     head = createRecLinkedList(arr, n, 0, nullptr);
-    // printList(head);
+    printList(head);
 
     // ? Insertion at a particular position in Doubly Linked List
     // Position should be '0 <= pos <= Length of Linked List'
-    int pos = 8;
-    int val = 4;
-    head = insertAtPos(head, pos, val);
+    // int pos = 8;
+    // int val = 4;
+    // head = insertAtPos(head, pos, val);
+    // printList(head);
+
+    // Deletion at start
+    // if(head != nullptr) {
+    //     Node * temp = head;
+    //     if(head -> next == nullptr) {
+    //         delete head;
+    //         head = nullptr;
+    //     }
+
+    //     else {
+    //         head = head -> next;
+    //         delete temp;
+
+    //         if(head)
+    //         head -> prev = nullptr;
+    //     }
+    // }
+
+    // Deletion at end
+    // if(head != nullptr) {
+    //     // If only single node exists
+    //     if(head -> next == nullptr) {
+    //         delete head;
+    //         head = nullptr;
+    //     }
+
+    //     // If more than one node exists
+    //     else {
+    //         Node * curr = head;
+
+    //         // Taking curr to last node
+    //         while(curr -> next) curr = curr -> next;
+
+    //         curr -> prev -> next = nullptr;
+    //         delete curr;
+    //     }
+    // }
+
+    // ? Deletion at given position
+    int pos = 7;
+    if(head != nullptr) {
+        if(pos == 1) {
+            if(head -> next == nullptr) {
+                delete head;
+                head = nullptr;
+            }
+            
+            else {
+                Node * temp = head;
+                head = head -> next;
+                delete temp;
+
+                if(head)
+                head -> prev = nullptr;
+            }
+        }
+
+        else {
+            Node * curr = head;
+
+            while(--pos && curr) curr = curr -> next;
+
+            if(curr == nullptr) cout << "Enter a valid range" << endl;
+
+            // If Last Node to be deleted
+            if(curr -> next == nullptr) {
+                curr -> prev -> next = nullptr;
+                delete curr;
+            }
+
+            else {
+                curr -> next -> prev = curr -> prev;
+                curr -> prev -> next = curr -> next;
+                delete curr;
+            }
+        }
+    }
+
     printList(head);
 }
